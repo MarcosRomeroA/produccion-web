@@ -95,7 +95,7 @@ if(isset($_POST['add'])){
             <br>
             <h3>Comentarios</h3>
             <?php $i = 0; foreach ($comments as $comentario): ?>
-                <?php if($comentario->getProductID() == $_GET['prodId']): ?>
+                <?php if($comentario->getProductID() == $_GET['prodId'] && $comentario->getVisibility() == ""): ?>
                     <?php $i++; ?>
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">

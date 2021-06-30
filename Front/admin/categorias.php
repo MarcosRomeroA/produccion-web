@@ -1,19 +1,18 @@
 <?php
 
-require __DIR__."/../helpers/connection.php";
+require_once __DIR__."/../../helpers/connection.php";
 include "includes/header.php";
 include "../helpers/dataHelper.php";
 include "../helpers/functions.php";
 
-// Array asociativo del JSON de categorias
-// $categorias = getDataFromJSON('categorias');
-$sql = "SELECT * FROM categories";
+require_once __DIR__.'/../../DataAccess/CategoryDAO.php';
 
-$categories = $con->query($sql);
+$categoryDAO = new CategoryDAO($con);
+
+$categories = $categoryDAO->getAll();
 
 if(!empty($_GET['del'])){
-    $sql = "UPDATE categories SET deleted_at = NOW() WHERE category_id = ".$_GET['del'];
-    $con->query($sql);
+    $categoryDAO->delete($_GET['del'], 'category_id');
     redirect('categorias.php');
 }
 
@@ -39,18 +38,18 @@ if(!empty($_GET['del'])){
                     </thead>
                     <tbody>
                         <?php foreach($categories as $categoria): ?>
-                            <?php if($categoria['deleted_at'] == NULL): ?>
+                            <?php if($categoria->getDeleted() == ""): ?>
                                 <tr>
-                                    <td><?php echo $categoria['category_id'] ?></td>
-                                    <td><?php echo $categoria['name'] ?></td>
+                                    <td><?php echo $categoria->getCategoryID() ?></td>
+                                    <td><?php echo $categoria->getNombre() ?></td>
                                     <td style="display: flex; justify-content: space-around; width: 115px;">
                                         <!-- boton de editar -->
                                         <a class="btn btn-info"
-                                            href="categoria_add.php?id=<?php echo $categoria['category_id'] ?>"><i
+                                            href="categoria_add.php?id=<?php echo $categoria->getCategoryID() ?>"><i
                                                 class="fas fa-edit"></i></a>
                                         <!-- boton de borrar -->
                                         <a class="btn btn-danger"
-                                            href="categorias.php?del=<?php echo $categoria['category_id'] ?>"><i
+                                            href="categorias.php?del=<?php echo $categoria->getCategoryID() ?>"><i
                                                 class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>

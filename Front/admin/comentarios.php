@@ -4,21 +4,21 @@ include "includes/header.php";
 include "../helpers/dataHelper.php";
 include "../helpers/functions.php";
 
-// Array asociativo del JSON de categorias
-// $comentarios = getDataFromJSON('comentarios');
-// $productos = getDataFromJSON('productos');
-require __DIR__."/../helpers/connection.php";
-// Array asociativo del JSON de marcas
-$sql = "SELECT C.*, P.name as product_name FROM comments C
-INNER JOIN products P on P.product_id = C.product_id WHERE P.deleted_at is NULL";
+require_once __DIR__."/../../helpers/connection.php";
 
-$comments = $con->query($sql);
+require_once __DIR__.'/../../DataAccess/CommentDAO.php';
+require_once __DIR__.'/../../DataAccess/ProductDAO.php';
+
+$commentDAO = new CommentDAO($con);
+$comments = $commentDAO->getAll();
+
+$productDAO = new ProductDAO($con);
+$products = $productDAO->getAll();
+
 
 if(!empty($_GET['del'])){
-    $sql = "UPDATE comments SET deleted_at = NOW() WHERE brand_id = ".$_GET['del'];
-    $con->query($sql);
-    // unset($comentarios[$_GET['del']]);
-    // setDataJSON('comentarios', $comentarios);
+    $commentDAO->delete($_GET['del'], 'comment_id');
+    redirect('comentarios.php');
 }
 ?>
     <div class="container-fluid">
@@ -32,9 +32,9 @@ if(!empty($_GET['del'])){
                         <option value="0">
                             Ver todos
                         </option>
-                        <?php foreach ($productos as $producto): ?>
-                            <option value="<?php echo $producto['id'] ?>" <?php echo isset($_GET['id_producto']) && $_GET['id_producto'] == $producto['id'] ? 'selected' : '' ?>  >
-                                <?php echo $producto['nombre'] ?>
+                        <?php foreach ($products as $producto): ?>
+                            <option value="<?php echo $producto->getId() ?>" <?php echo isset($_GET['id_producto']) && $_GET['id_producto'] == $producto['id'] ? 'selected' : '' ?>  >
+                                <?php echo $producto->getNombre() ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -57,14 +57,14 @@ if(!empty($_GET['del'])){
                         </thead>
                         <tbody>
                             <?php foreach($comments as $comentario): ?>
-                                <?php if($comentario['is_visible'] == NULL): ?>
-                                    <?php if( (isset($_GET['id_producto']) && ($comentario['id_producto'] == $_GET['id_producto'] || $_GET['id_producto'] == 0)) || !isset($_GET['id_producto']) ):  ?>
+                                <?php if($comentario->getVisibility() == ""): ?>
+                                    <?php if( (isset($_GET['id_producto']) && ($comentario->getProductID() == $_GET['id_producto'] || $_GET['id_producto'] == 0)) || !isset($_GET['id_producto']) ):  ?>
                                         <tr>
-                                            <td><?php echo $comentario['comment_id'] ?></td>
-                                            <td><?php echo $comentario['user'] ?></td>
-                                            <td><?php echo $comentario['product_name']?></td>
-                                            <td><?php echo $comentario['description'] ?></td>
-                                            <td><a class="btn btn-danger" href="comentarios.php?del=<?php echo $comentario['comment_id'] ?>"><i class="fas fa-trash-alt"></i></a></td>
+                                            <td><?php echo $comentario->getCommentID() ?></td>
+                                            <td><?php echo $comentario->getUser() ?></td>
+                                            <td><?php echo $productDAO->getOne($comentario->getProductID())->getNombre() ?></td>
+                                            <td><?php echo $comentario->getDescription() ?></td>
+                                            <td><a class="btn btn-danger" href="comentarios.php?del=<?php echo $comentario->getCommentID() ?>"><i class="fas fa-trash-alt"></i></a></td>
                                         </tr>
                                     <?php endif; ?>
                                 <?php endif; ?>

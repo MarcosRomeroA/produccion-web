@@ -6,6 +6,7 @@ class BrandEntity extends BaseEntity
 {
     private $brand_id;
     private $name;
+    private $deleted_at;
 
     public function __construct()
     {
@@ -25,6 +26,10 @@ class BrandEntity extends BaseEntity
     {
         return $this->brand_id;
     }
+    public function getDeleted()
+    {
+        return $this->deleted_at;
+    }
    
     /**
      * Defino los Setters
@@ -38,5 +43,9 @@ class BrandEntity extends BaseEntity
     public function setBrandId($brand_id)
     {
         $this->brand_id = $brand_id;
+    }
+    public function setDeleted($deleted_at)
+    {
+        $this->deleted_at = $deleted_at;
     }
 }

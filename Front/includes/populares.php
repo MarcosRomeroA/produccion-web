@@ -37,7 +37,7 @@ $products = $productB->getProducts();
                             </div>
                         </div>
                         <div class="popular-caption">
-                            <h3><a href="product_details.php?prodId=<?php echo $prod->getProduct()?>"><?php echo $prod->getNombre() ?></a></h3>
+                            <h3><a href="product_details.php?prodId=<?php echo $prod->getId()?>"><?php echo $prod->getNombre() ?></a></h3>
                             <span>$ <?php echo number_format($prod->getPrecio(), 2, ",", ".") ?></span>
                         </div>
                     </div>

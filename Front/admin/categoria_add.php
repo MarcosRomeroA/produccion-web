@@ -1,11 +1,13 @@
 <?php
 
 include "includes/header.php";
-include "../helpers/dataHelper.php";
+// include "../helpers/dataHelper.php";
 include "../helpers/functions.php";
 
-require __DIR__."/../helpers/connection.php";
+require_once __DIR__."/../../helpers/connection.php";
+require_once __DIR__.'/../../DataAccess/CategoryDAO.php';
 
+$categoryDao = new CategoryDAO($con);
 
 // POST
 if(isset($_POST['add'])){
@@ -13,18 +15,13 @@ if(isset($_POST['add'])){
     $name = $_POST['nombre'];
 
     if(!empty($_GET['id'])){
-
-        $sql = "UPDATE categories SET name = '$name' WHERE category_id = ".$_GET['id'];
-        $con->query($sql);
+        $categoryDao->modify($_GET['id'], $datos=["name"=>$name], 'category_id');
     }
     else
     {
         $sql = "INSERT INTO categories(name) VALUES ('$name')";        
         $con->query($sql);
     }
-
-
-
     redirect('categorias.php');
 }
 
@@ -37,7 +34,7 @@ if(!empty($_GET['id'])){
     }
 }
 
-$categorias = getDataFromJSON('categorias');
+// $categorias = getDataFromJSON('categorias');
 
 ?>
     <div class="container-fluid">

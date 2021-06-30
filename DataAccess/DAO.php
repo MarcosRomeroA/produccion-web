@@ -38,10 +38,10 @@ abstract class DAO
                 $set[] = $key."='".$value."'";
             }
         }
-        $sql = "UPDATE ".$this->table." SET ".implode(',', $set).", updated_at = now() WHERE id = ".$id;
+        $sql = "UPDATE ".$this->table." SET ".implode(',', $set)." WHERE id = ".$id;
 
         if (isset($id_field)) {
-            $sql = "UPDATE ".$this->table." SET ".implode(',', $set).", updated_at = now() WHERE $id_field = ".$id;
+            $sql = "UPDATE ".$this->table." SET ".implode(',', $set)." WHERE $id_field = ".$id;
         }
 
         return $this->con->exec($sql);

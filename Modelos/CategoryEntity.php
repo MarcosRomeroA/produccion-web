@@ -6,6 +6,7 @@ class CategoryEntity extends BaseEntity
 {
     private $category_id;
     private $name;
+    private $deleted_at;
 
     public function __construct()
     {
@@ -25,6 +26,10 @@ class CategoryEntity extends BaseEntity
     {
         return $this->category_id;
     }
+    public function getDeleted()
+    {
+        return $this->deleted_at;
+    }
    
     /**
      * Defino los Setters
@@ -38,5 +43,9 @@ class CategoryEntity extends BaseEntity
     public function setCategoryID($category_id)
     {
         $this->category_id = $category_id;
+    }
+    public function setDeleted($deleted_at)
+    {
+        $this->deleted_at = $deleted_at;
     }
 }

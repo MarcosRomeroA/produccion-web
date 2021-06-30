@@ -79,7 +79,7 @@ $products = $productB->getProducts();
                                         </div>
                                     </div>
                                     <div class="popular-caption">
-                                        <h3><a href="product_details.php?prodId=<?php echo $producto->getProduct()?>"><?php echo $producto->getNombre() ?></a></h3>
+                                        <h3><a href="product_details.php?prodId=<?php echo $producto->getId()?>"><?php echo $producto->getNombre() ?></a></h3>
                                         <span>$ <?php echo number_format($producto->getPrecio(), 2, ",", ".")  ?></span>
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@ $products = $productB->getProducts();
                                         </div>
                                     </div>
                                     <div class="popular-caption">
-                                        <h3><a href="product_details.php?prodId=<?php echo $producto->getProduct()?>"><?php echo $producto->getNombre() ?></a></h3>
+                                        <h3><a href="product_details.php?prodId=<?php echo $producto->getId()?>"><?php echo $producto->getNombre() ?></a></h3>
                                         <span>$ <?php echo number_format($producto->getPrecio(), 2, ",", ".")  ?></span>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@ $products = $productB->getProducts();
                                         </div>
                                     </div>
                                     <div class="popular-caption">
-                                        <h3><a href="product_details.php?prodId=<?php echo $producto->getProduct()?>"><?php echo $producto->getNombre() ?></a></h3>
+                                        <h3><a href="product_details.php?prodId=<?php echo $producto->getId()?>"><?php echo $producto->getNombre() ?></a></h3>
                                         <span>$ <?php echo number_format($producto->getPrecio(), 2, ",", ".")  ?></span>
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@ $products = $productB->getProducts();
                                         </div>
                                     </div>
                                     <div class="popular-caption">
-                                        <h3><a href="product_details.php?prodId=<?php echo $producto->getProduct()?>"><?php echo $producto->getNombre() ?></a></h3>
+                                        <h3><a href="product_details.php?prodId=<?php echo $producto->getId()?>"><?php echo $producto->getNombre() ?></a></h3>
                                         <span>$ <?php echo number_format($producto->getPrecio(), 2, ",", ".")  ?></span>
                                     </div>
                                 </div>

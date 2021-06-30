@@ -1,14 +1,11 @@
 <?php
 
 include "includes/header.php";
-include "../helpers/dataHelper.php";
 include "../helpers/functions.php";
 
 
-require __DIR__."/../helpers/connection.php";
+require_once __DIR__."/../../helpers/connection.php";
 
-// Array asociativo del JSON de marcas
-// $marcas = getDataFromJSON('marcas');
 
 // POST
 if(isset($_POST['add'])){
@@ -39,8 +36,6 @@ if(!empty($_GET['id'])){
         $name = $row['name'];
     }
 }
-
-$marcas = getDataFromJSON('marcas');
 
 ?>
     <div class="container-fluid">

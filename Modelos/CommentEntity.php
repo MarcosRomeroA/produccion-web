@@ -9,6 +9,7 @@ class CommentEntity extends BaseEntity
     private $product_id;
     private $description;
     private $stars;
+    private $is_visible;
     private $created_at;
 
     public function __construct()
@@ -40,6 +41,10 @@ class CommentEntity extends BaseEntity
     {
         return $this->stars;
     }
+    public function getVisibility()
+    {
+        return $this->is_visible;
+    }  
     public function getCreationDate()
     {
         return $this->created_at;
@@ -69,6 +74,10 @@ class CommentEntity extends BaseEntity
     {
         $this->stars = $stars;
     }
+    public function setVisibility($is_visible)
+    {
+        $this->is_visible = $is_visible;
+    }  
     public function setCreationDate($created_at)
     {
         $this->created_at = $created_at;

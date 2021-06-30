@@ -54,7 +54,7 @@ if (isset($_POST['add'])) {
             'product_id'
         );
     } else {
-        $productDAO->save($datos);
+        $productDAO->save($datos);        
     }
 
     redirect('productos.php');
