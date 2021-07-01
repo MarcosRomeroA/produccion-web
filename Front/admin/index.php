@@ -1,11 +1,18 @@
 <?php
-    include "../helpers/functions.php";
+if (isset($_POST['add'])) {
+    require_once __DIR__."/../../helpers/connection.php";
+    require_once __DIR__.'/../../DataAccess/UserDAO.php';
 
-    if(isset($_POST['login'])){
-        if($_POST['user'] == 'admin' && $_POST['pass'] == 'admin'){
-            redirect('dashboard.php');
-        }
+    $userDAO = new UserDAO($con);
+
+    $user = $userDAO->login($_POST);
+
+    if ($user && ($user->getRol()->getName() == 'ADMIN' || $user->getRol()->getName() == 'VENTAS')) {
+        header("Location: dashboard.php");
+    } else {
+        header("Location: index.php?error=true#login");
     }
+}
 
 ?>
 
@@ -13,7 +20,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,7 +34,6 @@
 
     <!-- Custom styles for this template-->
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
-
 </head>
 
 <body class="bg-gradient-primary vh-100">
@@ -52,14 +57,16 @@
                                 </div>
                                 <form class="user" action="" method="post">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name="user" id="user" placeholder="Ingresa tu usuario..">
+                                        <input type="text" class="form-control form-control-user" name="email" id="user" placeholder="Ingresa tu usuario..">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user" name="pass" id="exampleInputPassword" placeholder="Contraseña">
+                                        <input type="password" class="form-control form-control-user" name="password" id="exampleInputPassword" placeholder="Contraseña">
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block" name="login">
+                                    <button type="submit" class="btn btn-primary btn-user btn-block" name="add">
                                         Login
                                     </button>
+
+                                    <p style="color: red;"> <?php echo isset($_GET['error']) ? 'Datos incorrectos' : '' ?> </p>
                                 </form>
                             </div>
                         </div>

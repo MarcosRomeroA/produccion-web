@@ -4,79 +4,88 @@ require_once('BaseEntity.php');
 
 class UserEntity extends BaseEntity
 {
-    private $nombre;
+    private $user_id;
+    private $first_name;
+    private $last_name;
     private $email;
-    private $user;
     private $password;
-    private $perfiles;
+    private $rol_id;
 
     public function __construct()
     {
         parent::__construct();
-        $this->perfiles = array();
     }
+
     /**
      * Defino los Getters
-     *
      */
-    public function getNombre()
+    public function getId()
     {
-        return $this->nombre;
+        return $this->user_id;
     }
+
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
     public function getEmail()
     {
         return $this->email;
     }
-    public function getUser()
-    {
-        return $this->user;
-    }
+ 
 
     public function getPassword()
     {
         return $this->password;
     }
-    
-    public function getPerfiles()
+
+    public function getRolId()
     {
-        return $this->perfiles;
+        return $this->rol_id;
+    }
+    
+    public function getRol()
+    {
+        return $this->rol;
     }
     
     /**
      * Defino los Setters
      *
      */
-   
-    public function setNombre($nombre)
+    public function setNombre($first_name)
     {
-        $this->nombre = $nombre;
+        $this->$first_name = $first_name;
     }
+
+    public function setApellido($last_name)
+    {
+        $this->last_name = $last_name;
+    }
+
     public function setEmail($email)
     {
         $this->email = $email;
     }
-    public function setUser($user)
-    {
-        $this->user = $user;
-    }
 
     public function setPassword($password)
     {
-        $this->password = $password;
-    }
-    
-    public function setPerfiles($perfiles)
-    {
-        $this->perfiles = $perfiles;
+        $this->password = md5($password);
     }
 
-    public function poseePerfil($id)
+    public function setRolId($rolId)
     {
-        foreach ($this->getPerfiles() as $perfil) {
-            if ($perfil->getId() == $id) {
-                return true;
-            }
-        }
-        return false;
+        $this->rol_id = $rolId;
+    }
+    
+    public function setRol($rol)
+    {
+        $this->rol = $rol;
     }
 }

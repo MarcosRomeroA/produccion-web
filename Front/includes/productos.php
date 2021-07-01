@@ -25,10 +25,14 @@ $products = $productB->getProducts();
                     <div>
                         <h3>Categorias</h3>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link <?php if(empty($_GET['categoria'])) echo "active"; ?>"  href="shop.php?#productos">Todos</a>
+                            <a class="nav-item nav-link <?php if (empty($_GET['categoria'])) {
+    echo "active";
+} ?>"  href="shop.php?#productos">Todos</a>
 
-                            <?php foreach($categories as $categoria): ?>
-                                <a class="nav-item nav-link <?php if(!empty($_GET['categoria']) && $_GET['categoria'] == $categoria->getCategoryID()) echo "active"; ?>"
+                            <?php foreach ($categories as $categoria): ?>
+                                <a class="nav-item nav-link <?php if (!empty($_GET['categoria']) && $_GET['categoria'] == $categoria->getCategoryID()) {
+    echo "active";
+} ?>"
                                    href="shop.php?categoria=<?php echo $categoria->getCategoryID() ?><?php echo !empty($_GET['marca']) ? "&marca=".$_GET['marca'] : '' ?>#productos">
                                     <?php echo $categoria->getNombre(); ?>
                                 </a>
@@ -38,10 +42,14 @@ $products = $productB->getProducts();
                     <div>
                         <h3>Marcas</h3>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link <?php if(empty($_GET['marca'])) echo "active"; ?>"  href="shop.php?#productos">Todos</a>
+                            <a class="nav-item nav-link <?php if (empty($_GET['marca'])) {
+    echo "active";
+} ?>"  href="shop.php?#productos">Todos</a>
 
-                            <?php foreach($brands as $marca): ?>
-                                <a class="nav-item nav-link <?php if(!empty($_GET['marca']) && $_GET['marca'] == $marca->getBrandID()) echo "active"; ?>"
+                            <?php foreach ($brands as $marca): ?>
+                                <a class="nav-item nav-link <?php if (!empty($_GET['marca']) && $_GET['marca'] == $marca->getBrandID()) {
+    echo "active";
+} ?>"
                                    href="shop.php?<?php echo !empty($_GET['categoria']) ? 'categoria='.$_GET['categoria'].'&' : '' ?>marca=<?php echo $marca->getBrandID() ?>#productos">
                                     <?php echo $marca->getNombre() ?>
                                 </a>
@@ -59,11 +67,11 @@ $products = $productB->getProducts();
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="row">
 
-                    <?php foreach($products as $producto){ ?>
+                    <?php foreach ($products as $producto) { ?>
                         
-                        <?php if(
-                                ( isset($_GET['categoria']) && $producto->getCategoria() == $_GET['categoria'] ) &&
-                                ( isset($_GET['marca']) && $producto->getBrand() == $_GET['marca'] )
+                        <?php if (
+                                (isset($_GET['categoria']) && $producto->getCategoria()->getCategoryID() == $_GET['categoria']) &&
+                                (isset($_GET['marca']) && $producto->getBrand() == $_GET['marca'])
                             ):
                         ?>
 
@@ -85,7 +93,7 @@ $products = $productB->getProducts();
                                 </div>
                             </div>
 
-                        <?php elseif( (isset($_GET['categoria']) && $producto->getCategoria() == $_GET['categoria']) && !isset($_GET['marca'])    ): ?>
+                        <?php elseif ((isset($_GET['categoria']) && $producto->getCategoria()->getCategoryID() == $_GET['categoria']) && !isset($_GET['marca'])): ?>
 
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                                 <div class="single-popular-items mb-50 text-center">
@@ -105,7 +113,7 @@ $products = $productB->getProducts();
                                 </div>
                             </div>
 
-                        <?php elseif( (isset($_GET['marca']) && $producto->getBrand() == $_GET['marca']) && !isset($_GET['categoria'])   ): ?>
+                        <?php elseif ((isset($_GET['marca']) && $producto->getBrand() == $_GET['marca']) && !isset($_GET['categoria'])): ?>
 
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                                 <div class="single-popular-items mb-50 text-center">
@@ -125,7 +133,7 @@ $products = $productB->getProducts();
                                 </div>
                             </div>
 
-                        <?php elseif( !isset($_GET['marca']) && !isset($_GET['categoria'])): ?>
+                        <?php elseif (!isset($_GET['marca']) && !isset($_GET['categoria'])): ?>
 
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                                 <div class="single-popular-items mb-50 text-center">

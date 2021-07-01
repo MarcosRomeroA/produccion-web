@@ -5,26 +5,25 @@ include "includes/header.php";
 include "../helpers/dataHelper.php";
 include "../helpers/functions.php";
 
-require_once __DIR__.'/../../DataAccess/CategoryDAO.php';
+require_once __DIR__.'/../../DataAccess/userDAO.php';
 
-$categoryDAO = new CategoryDAO($con);
+$userDAO = new UserDAO($con);
 
-$categories = $categoryDAO->getAll();
+$users = $userDAO->getAll();
 
 if (!empty($_GET['del'])) {
-    $categoryDAO->delete($_GET['del'], 'category_id');
-    redirect('categorias.php');
+    $userDAO->delete($_GET['del'], 'user_id');
+    redirect('usuarios.php');
 }
 
 ?>
 <div class="container-fluid">
-
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3"
             style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-            <h6 class="m-0 font-weight-bold text-primary">Categorias</h6>
-            <a class="btn btn-primary" href="categoria_add.php">+</a>
+            <h6 class="m-0 font-weight-bold text-primary">Usuarios</h6>
+            <a class="btn btn-primary" href="usuarios_add.php">+</a> 
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -33,27 +32,32 @@ if (!empty($_GET['del'])) {
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Rol</th>
+                            <th>Email</th>
                             <th style="width: 115px;">Modificar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($categories as $categoria): ?>
-                            <?php if ($categoria->getDeleted() == ""): ?>
+                        <?php foreach ($users as $user): ?>
                                 <tr>
-                                    <td><?php echo $categoria->getCategoryID() ?></td>
-                                    <td><?php echo $categoria->getNombre() ?></td>
+                                    <td><?php echo $user->getId() ?></td>
+                                    <td><?php echo $user->getFirstName() ?></td>
+                                    <td><?php echo $user->getLastName() ?></td>
+                                    <td><?php echo $user->getRol()->getName() ?></td>
+                                    <td><?php echo $user->getEmail() ?></td>
                                     <td style="display: flex; justify-content: space-around; width: 115px;">
                                         <!-- boton de editar -->
                                         <a class="btn btn-info"
-                                            href="categoria_add.php?id=<?php echo $categoria->getCategoryID() ?>"><i
+                                            href="usuarios_add.php?id=<?php echo $user->getId() ?>"><i
                                                 class="fas fa-edit"></i></a>
                                         <!-- boton de borrar -->
                                         <a class="btn btn-danger"
-                                            href="categorias.php?del=<?php echo $categoria->getCategoryID() ?>"><i
-                                                class="fas fa-trash-alt"></i></a>
+                                            href="usuarios.php?del=<?php echo $user->getId() ?>"><i
+                                                class="fas fa-trash-alt"></i>
+                                        </a>
                                     </td>
                                 </tr>
-                            <?php endif; ?>
                         <?php endforeach; ?>
                     </tbody>
                 </table>

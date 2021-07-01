@@ -3,20 +3,21 @@ include('../helpers/connection.php');
 include('./../LogicaNegocio/ProductBusiness.php');
 include('./../LogicaNegocio/CommentBusiness.php');
 
+session_start();
+
 $productB = new ProductBusiness($con);
 $product = $productB->getProduct($_GET['prodId']);
 
 $commentB = new CommentBusiness($con);
 $comments = $commentB->getComments();
 
-if(isset($_POST['add'])){
-        $id_producto=$_GET['prodId'];
-        $nombre=$_POST['nombre'];
-        $comentario=$_POST['comentario'];
+if (isset($_POST['add'])) {
+    $id_producto=$_GET['prodId'];
+    $comentario=$_POST['comentario'];
         
-        $datos = array('product_id'=>$id_producto, 'user'=>$nombre, 'description'=>$comentario, 'created_at'=>date("Y.m.d"));
-        $comment = $commentB->saveComment($datos);
-        header("Refresh:0");
+    $datos = array('product_id'=>$id_producto, 'user'=>$_SESSION['fullname'], 'description'=>$comentario, 'created_at'=>date("Y.m.d"));
+    $comment = $commentB->saveComment($datos);
+    header("Refresh:0");
 }
 ?>
 
@@ -78,10 +79,6 @@ if(isset($_POST['add'])){
         <div class="container">
             <h3>Añadir un comentario</h3>
             <form action="" method="post">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" class="form-control" name="nombre">
-                </div>
 
                 <div class="form-group">
                     <label for="exampleInputPassword1">Comentarios</label>
@@ -95,7 +92,7 @@ if(isset($_POST['add'])){
             <br>
             <h3>Comentarios</h3>
             <?php $i = 0; foreach ($comments as $comentario): ?>
-                <?php if($comentario->getProductID() == $_GET['prodId'] && $comentario->getVisibility() == ""): ?>
+                <?php if ($comentario->getProductID() == $_GET['prodId'] && $comentario->getVisibility() == ""): ?>
                     <?php $i++; ?>
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">

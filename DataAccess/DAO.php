@@ -19,6 +19,10 @@ abstract class DAO
         $values = array();
         
         foreach ($datos as $key=>$value) {
+            if ($key == 'password') {
+                $value = md5($value);
+            }
+
             if (!empty($value)) {
                 $column[] = $key;
                 $values[] = $value;
@@ -26,18 +30,24 @@ abstract class DAO
         }
 
         $sql = "INSERT INTO ".$this->table."(".implode(',', $column).") VALUES ('".implode("','", $values)."')";
-         
+
         return $this->con->exec($sql);
     }
 
     public function modify($id, $datos = array(), ?string $id_field = null)
     {
-        $set=array();
+        $set = array();
+
         foreach ($datos as $key=>$value) {
+            if ($key == 'password') {
+                $value = md5($value);
+            }
+
             if (!empty($value)) {
                 $set[] = $key."='".$value."'";
             }
         }
+        
         $sql = "UPDATE ".$this->table." SET ".implode(',', $set)." WHERE id = ".$id;
 
         if (isset($id_field)) {

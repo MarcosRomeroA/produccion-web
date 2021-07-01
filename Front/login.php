@@ -1,6 +1,23 @@
+<?php
+if (isset($_POST['add'])) {
+    require_once __DIR__."/../helpers/connection.php";
+    require_once __DIR__.'/../DataAccess/UserDAO.php';
+
+    $userDAO = new UserDAO($con);
+
+    $user = $userDAO->login($_POST);
+
+    if ($user && ($user->getRol()->getName() == 'CLIENTE')) {
+        header("Location: index.php");
+    } else {
+        header("Location: login.php?error=true#login");
+    }
+}
+
+?>
 
 <!doctype html>
-<html lang="zxx">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -26,7 +43,6 @@
 <body>
     <header>
     <?php include_once('includes/navbar.php'); ?>
-        <!-- Header End -->
     </header>
     <main>
     
@@ -62,34 +78,31 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_form">
                             <div class="login_part_form_iner">
-                                <h3>Bienvenido Usuario! <br>
+                                <h3><?php echo "AOIJSHIOAJSMAS"; ?> <br>
                                     Porfavor logueate</h3>
-                                <form class="row contact_form" action="procesar.php" method="post" novalidate="novalidate">
+                                <form class="row contact_form" action="" method="post">
                                     <div class="col-md-12 form-group p_star">
-                                        <input type="text" class="form-control" id="name" name="name" value=""
-                                            placeholder="Usuario">
+                                        <input type="text" class="form-control" id="name" name="email" placeholder="Email">
                                     </div>
                                     <div class="col-md-12 form-group p_star">
-                                        <input type="password" class="form-control" id="password" name="password" value=""
-                                            placeholder="Contraseña">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
                                     </div>
                                     <div class="col-md-12 form-group">
                                         
-
                                         <div class="creat_account d-flex align-items-center">
                                             <input type="checkbox" id="f-option" name="selector">
                                             <label for="f-option">Recuerdame la contraseña</label>
                                         </div>
 
-                                        <?php if(isset($_GET['error']) ): ?>
+                                        <?php if (isset($_GET['error'])): ?>
 
                                         <div class="alert alert-danger" style="margin-top: 15px;">
                                             USUARIO O CONTRASEÑA INCORRECTOS
                                         </div>
 
                                         <?php endif; ?>
-                                        <button type="submit" value="submit" class="btn_3">
-                                            log in
+                                        <button type="submit" name="add" value="submit" class="btn_3">
+                                        <?php echo "AOIJSHIOAJSMAS"; ?>
                                        </button>
                                         <a class="lost_pass" href="#">Te olvidate la contraseña verdad?</a>
                                     </div>

@@ -16,7 +16,7 @@ $productDAO = new ProductDAO($con);
 $products = $productDAO->getAll();
 
 
-if(!empty($_GET['del'])){
+if (!empty($_GET['del'])) {
     $commentDAO->delete($_GET['del'], 'comment_id');
     redirect('comentarios.php');
 }
@@ -56,9 +56,9 @@ if(!empty($_GET['del'])){
                         </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($comments as $comentario): ?>
-                                <?php if($comentario->getVisibility() == ""): ?>
-                                    <?php if( (isset($_GET['id_producto']) && ($comentario->getProductID() == $_GET['id_producto'] || $_GET['id_producto'] == 0)) || !isset($_GET['id_producto']) ):  ?>
+                            <?php foreach ($comments as $comentario): ?>
+                                <?php if ($comentario->getVisibility() == ""): ?>
+                                    <?php if ((isset($_GET['id_producto']) && ($comentario->getProductID() == $_GET['id_producto'] || $_GET['id_producto'] == 0)) || !isset($_GET['id_producto'])):  ?>
                                         <tr>
                                             <td><?php echo $comentario->getCommentID() ?></td>
                                             <td><?php echo $comentario->getUser() ?></td>
