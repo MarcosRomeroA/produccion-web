@@ -34,7 +34,9 @@ class ProductDAO extends DAO
                 price,stock,
                 image 
                 FROM $this->table WHERE deleted_at IS NULL and product_id = $id";
+
         $resultado = $this->con->query($sql, PDO::FETCH_CLASS, 'ProductEntity')->fetch();
+
         // if($resultado){
         //     $resultado->setCategoria($this->CategoryDao->getOne($resultado->getCategoria()));
         //     $resultado->setBrand($this->BrandDAO->getOne($resultado->getProduct()));

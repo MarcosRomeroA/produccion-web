@@ -20,7 +20,10 @@ class CommentDAO extends DAO
 
     public function getAll($where = array())
     {
-        $sql = "SELECT comment_id,user,product_id,description,stars,is_visible,created_at FROM $this->table";
+        $sql = "SELECT c.*
+                FROM $this->table c
+                INNER JOIN products p ON c.product_id = p.product_id AND p.deleted_at IS NULL
+                ";
         $resultado = $this->con->query($sql, PDO::FETCH_CLASS, 'CommentEntity')->fetchAll();
         return $resultado;
     }
