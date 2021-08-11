@@ -7,6 +7,7 @@ class ProductEntity extends BaseEntity
     private $name;
     private $product_id;
     private $description;
+    private $is_available;
     private $category_id;
     private $brand_id;
     private $comentarios;
@@ -38,6 +39,10 @@ class ProductEntity extends BaseEntity
     public function getDescripcion()
     {
         return $this->description;
+    }
+    public function getVisible()
+    {
+        return $this->is_available;
     }
     public function getCategoria()
     {
@@ -71,6 +76,10 @@ class ProductEntity extends BaseEntity
     public function setDescripcion($description)
     {
         $this->description = $description;
+    }
+    public function setVisible($is_available)
+    {
+        $this->is_available = $is_available;
     }
     public function setBrand($brand_id)
     {

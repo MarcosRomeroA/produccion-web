@@ -20,7 +20,7 @@ $brands = $brandDAO->getAll();
 if (isset($_POST['add'])) {
     $image = $_FILES['image']['name'];
 
-    if (isset($archivo) && $archivo != "") {
+    if (isset($image) && $image != "") {
         $tipo = $_FILES["image"]['type'];
 
         $tamano = $_FILES['image']['size'];
@@ -30,7 +30,7 @@ if (isset($_POST['add'])) {
         if (!((strpos($tipo, "gif") || strpos($tipo, "jpeg") || strpos($tipo, "jpg") || strpos($tipo, "png")) && ($tamano < 2000000))) {
             echo '<div><b>Error. La extensión o el tamaño de los archivos no es correcta.<br/> - Se permiten archivos .gif, .jpg, .png. y de 200 kb como máximo.</b></div>';
         } else {
-            move_uploaded_file($temp, '../imagenes/'.$archivo);
+            move_uploaded_file($temp, '../imagenes/'.$image);
         }
     }
 
@@ -42,11 +42,14 @@ if (isset($_POST['add'])) {
         "brand_id" => $_POST['marca'],
         "price" => $_POST['precio'],
         "stock" => $_POST['stock'],
+        "is_available" => $_POST['is_available'],
         "image" => $image
     ];
-
+    
     if (!empty($_GET['id'])) {
-        unset($datos['image']);
+        if (empty($image)) {
+            unset($datos['image']);
+        }
 
         $productDAO->modify(
             $_GET['id'],
@@ -54,7 +57,7 @@ if (isset($_POST['add'])) {
             'product_id'
         );
     } else {
-        $productDAO->save($datos);        
+        $productDAO->save($datos);
     }
 
     redirect('productos.php');
@@ -84,6 +87,17 @@ if (!empty($_GET['id'])) {
                     <div class="form-group">
                         <label for="exampleInputPassword1">Descripcion</label>
                         <textarea class="form-control" name="descripcion" ><?php echo !empty($producto) ? $producto->getDescripcion(): '' ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="is_available">¿Esta visible?</label>
+                        <select name="is_available" id="is_available" class="form-control">
+                            <option value="N">
+                                No
+                            </option>
+                            <option value="S">
+                                Si
+                            </option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="categoria">Categoria</label>

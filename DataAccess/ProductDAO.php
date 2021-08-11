@@ -29,6 +29,7 @@ class ProductDAO extends DAO
                 product_id,
                 category_id,
                 brand_id,
+                is_available,
                 name,
                 description,
                 price,stock,
@@ -49,7 +50,7 @@ class ProductDAO extends DAO
 
     public function getAll($where = array())
     {
-        $sqlWhereStr = ' WHERE 1=1 ';
+        $sqlWhereStr = ' WHERE deleted_at IS NULL';
 
         if (!empty($where['cat'])) {
             $sqlWhereStr .= ' AND category_id = '.$where['cat'];
@@ -58,31 +59,40 @@ class ProductDAO extends DAO
         if (!empty($where['brand'])) {
             $sqlWhereStr .= ' AND brand_id = '.$where['brand'];
         }
- 
-        /*
-                $sqlWhere = array();
 
-                if(!empty($where['autor'])){
-                    $sqlWhere[] = ' AND autor = '.$where['autor'];
-                }
-                if(!empty($where['cat'])){
-                    $sqlWhere[]= ' AND categoria = '.$where['cat'];
-                }
-                $sqlWhereStr = '';
-                if(!empty($sqlWhere)) $sqlWhereStr = ' WHERE 1=1 '.implode('',$sqlWhere);
-        */
+        if (!empty($where['visible'])) {
+            $visible = $where['visible'];
+
+            $sqlWhereStr .= " AND is_available = '$visible'";
+        }
+ 
+ 
         $sql = "SELECT DISTINCT 
-                    product_id,
-                    category_id,
-                    brand_id,
-                    name,
-                    description,
-                    price,
-                    stock,
-                    image 
+                    *
                 FROM $this->table 
-                WHERE deleted_at IS NULL";
-        // .$sqlWhereStr;
+        ";
+
+        $sql .= $sqlWhereStr;
+
+        $resultado = $this->con->query($sql, PDO::FETCH_CLASS, 'ProductEntity')->fetchAll();
+
+        foreach ($resultado as $index=>$res) {
+            $resultado[$index]->setCategoria($this->CategoryDao->getOne($res->getCategoria()));
+        }
+
+        return $resultado;
+    }
+
+    public function getDestacados()
+    {
+        $sql = "SELECT p.*, AVG(c.stars) stars
+                FROM products p
+                INNER JOIN comments c ON p.product_id = c.product_id
+                WHERE deleted_at IS NULL AND is_available = 'S'
+                GROUP BY p.product_id
+                ORDER BY stars DESC
+                LIMIT 3
+            ";
 
         $resultado = $this->con->query($sql, PDO::FETCH_CLASS, 'ProductEntity')->fetchAll();
 

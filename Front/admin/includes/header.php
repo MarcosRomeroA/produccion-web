@@ -65,6 +65,7 @@
         </li>
 
         <!-- Nav Item - Tables -->
+        <?php if ($_SESSION['rol'] != 'VENTAS'): ?>
         <li class="nav-item">
             <a class="nav-link" href="categorias.php">
                 <i class="fas fa-fw fa-table"></i>
@@ -88,7 +89,8 @@
                 <i class="fas fa-fw fa-comment"></i>
                 <span>Usuarios</span></a>
         </li>
-
+        
+        <?php endif; ?>
         
 
         <!-- Divider -->

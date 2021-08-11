@@ -15,7 +15,7 @@ if (isset($_POST['add'])) {
     $id_producto=$_GET['prodId'];
     $comentario=$_POST['comentario'];
         
-    $datos = array('product_id'=>$id_producto, 'user'=>$_SESSION['fullname'], 'description'=>$comentario, 'created_at'=>date("Y.m.d"));
+    $datos = array('product_id'=>$id_producto, 'user'=>$_SESSION['fullname'], 'description'=>$comentario, 'stars' => $_POST['stars'], 'created_at'=>date("Y.m.d"));
     $comment = $commentB->saveComment($datos);
     header("Refresh:0");
 }
@@ -85,6 +85,17 @@ if (isset($_POST['add'])) {
                     <textarea class="form-control" name="comentario" rows="6" ></textarea>
                 </div>
 
+                <div class="form-group">
+                        <label for="stars">Calificar</label>
+                        <select name="stars" id="stars" class="form-control">
+                            <option value="1" >1</option>
+                            <option value="2" >2</option>
+                            <option value="3" >3</option>
+                            <option value="4" >4</option>
+                            <option value="5" selected>5</option>
+                        </select>
+                    </div>
+
                 <button type="submit" name="add" class="btn btn-primary" style="float: right">Enviar</button>
                 <br><br>
             </form>
@@ -100,6 +111,7 @@ if (isset($_POST['add'])) {
                             <div class="fecha"><?php echo $comentario->getCreationDate(); ?></div>
                         </div>
                         <div class="card-body"><?php echo $comentario->getDescription(); ?></div>
+                        <div class="card-body"> <b>  Calificacion: </b> <?php echo $comentario->getStars(); ?></div>
                     </div>
                     <br>
                 <?php endif; ?>

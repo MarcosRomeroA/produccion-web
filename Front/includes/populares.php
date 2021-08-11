@@ -6,7 +6,37 @@ include('./../LogicaNegocio/ProductBusiness.php');
 
 $productB = new ProductBusiness($con);
 $products = $productB->getProducts();
+$destacados = $productB->getDestacados();
 ?> 
+
+<section class="new-product-area pt-70">
+    <div class="container">
+        <!-- Section tittle -->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="section-tittle mb-70">
+                    <h2>Destacados</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <?php foreach ($destacados as $new_arrival) { ?>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                <div class="single-new-pro mb-30 text-center">
+                    <div class="product-img">
+                        <img src="imagenes/<?php echo $new_arrival->getImage() ?>" alt="">
+                    </div>
+                    <div class="product-caption">
+                        <h3><a href="#"></a><?php echo $new_arrival->getNombre() ?></h3>
+
+                        <span><?php echo $new_arrival->getPrecio() ?></span>
+                    </div>
+                </div>
+            </div>
+            <?php }?>
+        </div>
+    </div>
+</section>
 
 <!--? Popular Items Start -->
 <div class="popular-items section-padding30">
@@ -24,8 +54,8 @@ $products = $productB->getProducts();
         <div class="container">
             <div class="row" style="display: flex; align-items:baseline">
                 <?php
-                foreach($products as $prod){
-                ?>
+                foreach ($products as $prod) {
+                    ?>
                     <div class="single-popular-items mb-50 text-center col-md-3" >
                         <div class="popular-img">
                             <img src="imagenes/<?php echo $prod->getImage() ?>" alt="iteracion de relojes">
@@ -41,7 +71,8 @@ $products = $productB->getProducts();
                             <span>$ <?php echo number_format($prod->getPrecio(), 2, ",", ".") ?></span>
                         </div>
                     </div>
-                <?php } ?>
+                <?php
+                } ?>
             </div>
         </div>
         <!-- Button -->

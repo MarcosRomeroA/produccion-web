@@ -42,7 +42,7 @@ abstract class DAO
             if ($key == 'password') {
                 $value = md5($value);
             }
-
+                    
             if (!empty($value)) {
                 $set[] = $key."='".$value."'";
             }

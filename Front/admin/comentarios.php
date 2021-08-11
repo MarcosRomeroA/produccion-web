@@ -33,7 +33,7 @@ if (!empty($_GET['del'])) {
                             Ver todos
                         </option>
                         <?php foreach ($products as $producto): ?>
-                            <option value="<?php echo $producto->getId() ?>" <?php echo isset($_GET['id_producto']) && $_GET['id_producto'] == $producto['id'] ? 'selected' : '' ?>  >
+                            <option value="<?php echo $producto->getId() ?>" <?php echo isset($_GET['id_producto']) && $_GET['id_producto'] == $producto->getId() ? 'selected' : '' ?>  >
                                 <?php echo $producto->getNombre() ?>
                             </option>
                         <?php endforeach; ?>

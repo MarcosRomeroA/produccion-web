@@ -47,12 +47,16 @@ class UserDAO extends DAO
         $resultado = $this->con->query($sql, PDO::FETCH_CLASS, 'UserEntity')->fetch();
 
         if ($resultado) {
-            $resultado->setRol($this->rolDAO->getOne($resultado->getRolId()));
+            $rol = $this->rolDAO->getOne($resultado->getRolId());
+            $resultado->setRol($rol);
 
             session_start();
 
             $_SESSION["fullname"] = $resultado->getFirstName(). " " . $resultado->getLastName();
             $_SESSION["rol"] = $resultado->getRol()->getName();
+
+
+            $sql = "SELECT user_id, rol_id, first_name, last_name, email, password FROM $this->table WHERE email = '".$datos['email']."' AND password = '".md5($datos['password'])."'";
 
             return $resultado;
         }

@@ -12,7 +12,7 @@ $productB = new ProductBusiness($con);
 
 $categories = $categoryB->getCategories();
 $brands = $brandB->getBrands();
-$products = $productB->getProducts();
+$products = $productB->getProducts(['visible' => 'S']);
 ?>
         
 <!-- Latest Products Start -->

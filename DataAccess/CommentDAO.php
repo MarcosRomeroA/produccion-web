@@ -13,7 +13,7 @@ class CommentDAO extends DAO
 
     public function getOne($id)
     {
-        $sql = "SELECT comment_id,user,product_id,description,stars,is_visible,created_at FROM $this->table WHERE product_id = $id";
+        $sql = "SELECT * FROM $this->table WHERE product_id = $id";
         $resultado = $this->con->query($sql, PDO::FETCH_CLASS, 'CommentEntity')->fetch();
         return $resultado;
     }
@@ -22,9 +22,12 @@ class CommentDAO extends DAO
     {
         $sql = "SELECT c.*
                 FROM $this->table c
-                INNER JOIN products p ON c.product_id = p.product_id AND p.deleted_at IS NULL
+                INNER JOIN products p ON c.product_id = p.product_id 
+                WHERE p.deleted_at IS NULL
                 ";
+
         $resultado = $this->con->query($sql, PDO::FETCH_CLASS, 'CommentEntity')->fetchAll();
+
         return $resultado;
     }
 
@@ -33,9 +36,10 @@ class CommentDAO extends DAO
         $productID = $datos['product_id'];
         $user = $datos['user'];
         $description = $datos['description'];
+        $stars = $datos['stars'];
         
-        $sql = "INSERT INTO $this->table (product_id, user, description, created_at)
-            VALUES('$productID','$user','$description', NOW());";
+        $sql = "INSERT INTO $this->table (product_id, user, description, stars, created_at)
+            VALUES('$productID','$user','$description', '$stars', NOW());";
         
         $this->con->exec($sql);
     }

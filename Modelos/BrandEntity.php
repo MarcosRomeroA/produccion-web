@@ -1,21 +1,21 @@
 <?php
 
-require_once ('BaseEntity.php');
+require_once('BaseEntity.php');
 
 class BrandEntity extends BaseEntity
 {
     private $brand_id;
     private $name;
     private $deleted_at;
+    private $is_available;
 
     public function __construct()
     {
         parent::__construct();
-
     }
     /**
      * Defino los Getters
-     * 
+     *
      */
      
     public function getNombre()
@@ -33,7 +33,7 @@ class BrandEntity extends BaseEntity
    
     /**
      * Defino los Setters
-     * 
+     *
      */
     
     public function setNombre($name)
@@ -47,5 +47,14 @@ class BrandEntity extends BaseEntity
     public function setDeleted($deleted_at)
     {
         $this->deleted_at = $deleted_at;
+    }
+
+    public function setVisible($is_available)
+    {
+        $this->is_available = $is_available;
+    }
+    public function getVisible()
+    {
+        return $this->is_available;
     }
 }

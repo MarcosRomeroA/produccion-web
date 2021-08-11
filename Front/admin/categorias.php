@@ -33,6 +33,7 @@ if (!empty($_GET['del'])) {
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
+                            <th>Visible</th>
                             <th style="width: 115px;">Modificar</th>
                         </tr>
                     </thead>
@@ -42,6 +43,7 @@ if (!empty($_GET['del'])) {
                                 <tr>
                                     <td><?php echo $categoria->getCategoryID() ?></td>
                                     <td><?php echo $categoria->getNombre() ?></td>
+                                    <td><?php echo $categoria->getVisible() ?></td>
                                     <td style="display: flex; justify-content: space-around; width: 115px;">
                                         <!-- boton de editar -->
                                         <a class="btn btn-info"

@@ -28,7 +28,6 @@
     <?php include('../helpers/connection.php')?>
     <main>
         <?php include('includes/header.php') ?>
-        <?php include('includes/new_arrivals.php') ?>
         <?php include('includes/populares.php') ?>1
     </main>
  

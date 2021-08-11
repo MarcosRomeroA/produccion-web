@@ -12,7 +12,7 @@ $brandDAO = new BrandDAO($con);
 
 $brands = $brandDAO->getAll();
 
-if(!empty($_GET['del'])){
+if (!empty($_GET['del'])) {
     $brandDAO->delete($_GET['del'], 'brand_id');
     redirect('marcas.php');
 }
@@ -33,15 +33,17 @@ if(!empty($_GET['del'])){
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
+                            <th>Visible</th>
                             <th style="width: 115px;">Modificar</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach($brands as $marca): ?>
-                            <?php if($marca->getDeleted() == ""): ?>
+                        <?php foreach ($brands as $marca): ?>
+                            <?php if ($marca->getDeleted() == ""): ?>
                                 <tr>
                                     <td><?php echo $marca->getBrandID() ?></td>
                                     <td><?php echo $marca->getNombre() ?></td>
+                                    <td><?php echo $marca->getVisible() ?></td>
                                     <td style="display: flex; justify-content: space-around; width: 115px;">
                                     <!-- boton de editar -->
                                         <a class="btn btn-info" href="marca_add.php?id=<?php echo $marca->getBrandID() ?>"><i class="fas fa-edit"></i></a>

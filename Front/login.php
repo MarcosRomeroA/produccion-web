@@ -78,7 +78,7 @@ if (isset($_POST['add'])) {
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_form">
                             <div class="login_part_form_iner">
-                                <h3><?php echo "AOIJSHIOAJSMAS"; ?> <br>
+                                <h3> <br>
                                     Porfavor logueate</h3>
                                 <form class="row contact_form" action="" method="post">
                                     <div class="col-md-12 form-group p_star">
